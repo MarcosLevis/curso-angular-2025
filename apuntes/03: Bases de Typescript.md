@@ -50,14 +50,63 @@
 
     archivo: topics/03-functions
 
-    interface Character {
-        name: string;
-        hp: number;
-        showHp: () => void;
-    }
+        interface Character {
+            name: string;
+            hp: number;
+            showHp: () => void;
+        }
 
 16. Tarea sobre objetos e interfaces
 
-    
+    topics/04-homework-typescript
 
+17. Desestructuracion de Objetos
 
+    topics/05-basic-desestructuring
+
+    Se puede aplicar en objetos, en importaciones y exportaciones de Modulos, argumentos de funciones, en un archivo, en una estructura de datos. Consiste en poder tomar ciertas piesas que a mi me interesan. Basicamente es acceder al valor del atributo sin acceder apartir del '.'. Se le puede poner nombre o usar el nombre del atributo del objeto.
+
+    const { song: nombreVariable } = audioPlayer;
+    console.log('Song: ', nombreVariable)
+
+18. Desestructuracion de arreglos.
+
+    topics/05-basic-desestructuring
+
+    Es basicamente lo mismo que en los objetos pero en vez de usarlo con llaves se usa con corchetes.
+
+        const [p1, p2 , trunks]: string [] = ['Goku', 'Vegeta', 'Trunk']
+        console.log ('Personaje: ', trunks)
+
+19. Desestructuracion de Argumentos
+
+    archivo: topic/06-function-destructuring.ts
+
+    Segun el Clean Code se recomienda tener un maximo de 3 parametros en una funcion, si tenemos mas de tres, hay que crear un objeto y pasarle el objeto como argumento a la funcion. 
+
+    En ECS6 cuando tenemos una propiedad que apunta a una variable cuyo nombre es identico, podemos obviar escribirlo ya que asumo que se llama igual.
+
+        const result = taxCalculation({
+            products: shoppingCart,
+            tax,
+        })
+
+    tax en este caso es el nombre del tatributo pero tambien de la variable que va a ser asignada, entonces no se le pone tax: tax; sino se deja tax directamente.
+
+20. Resolucion de tarea - Desestructuracion
+
+        function taxCalculation( options:TaxCalculationOptions ): [number,number]{
+            //function taxCalculation( { products, tax}:TaxCalculationOptions ): [number,number]{
+
+            let total = 0;
+
+            let { products , tax} = options
+            products.forEach( ({ price })=> {
+                total += price;
+            });
+            return [total, total * tax]
+        }
+
+21. Importaciones y Exportaciones
+
+    Se resume en tener una funcion encapsulada. La idea de exportar es transformar los archivos en modulos, es decir que esos modulos estan encapsulados y solo que se exporta es lo que se expone a que pueda ser utilizado por otra parte de la app
