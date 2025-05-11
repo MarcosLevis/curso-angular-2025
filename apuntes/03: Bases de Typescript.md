@@ -109,4 +109,84 @@
 
 21. Importaciones y Exportaciones
 
-    Se resume en tener una funcion encapsulada. La idea de exportar es transformar los archivos en modulos, es decir que esos modulos estan encapsulados y solo que se exporta es lo que se expone a que pueda ser utilizado por otra parte de la app
+    archivo: topics/08-classes
+
+    Se resume en tener una funcion encapsulada. La idea de exportar es transformar los archivos en modulos, es decir que esos modulos estan encapsulados y solo lo que se exporta es lo que se expone a que pueda ser utilizado por otra parte de la app
+
+    Clave: cuando importamos algo de un archivo, lo esta trayendo y ejecutando COMPLETO. Por eso hay que tener cuidado de que es lo que hay en el codigo que se exporta.
+
+22. Clases Basicas
+
+    Las Clases en typescript no son como las de javasript que son mas bien prototipos. Son clases del paradigma orientado a objetos que ya se. Nada nuevo.
+
+        public name?: string;
+        public name: string | undefined; 
+        //son cosas distintas, en ? no existe la presencia del valor
+    
+    Como typescript despues de compila js cuando queremos acceder a un atributo privado, nos va a tirar error, pero va a compilar igual y nos va a dejar acceder ya que es js, pero te lo deja marcadito. Esto siempre puede configurarse en el tsconfig igual. 
+
+23. Constructor de una Clase
+
+    Funciona igual que en cualquier lenguaje objetoso. Tambien hay sintaxis locas, como resumir toda la clase en el constructor:
+
+        constructor(
+            public name: string, 
+            private addres: string = 'No Address'
+        ) {}
+    
+    Esto sienta las bases de una las ventajas que tiene Angular por sobre otras herramientas que es la Inyeccion de Dependencias. Que basicamente se va a realizar en el constructor... despues lo veremos mas a profundidad. 
+
+24. Extender una Clase
+
+    Herencia de toda la vida.
+
+25. Priorizar compososicion sobre la herencia
+
+    Para no extender inifinitamente y hacer una herencia muy extendida, priorizamos la composicion. Basicamente es que un atributo sea una instancia de otra clase. Un objeto esta compuesto por uno o varios objetos. Composicion de toda la vida.
+
+26. Genericos
+
+    archivo: /09-generics
+
+    Tratar de evitar lo mas posible el tipo de datos 'any', ya que quita todo tipo de restriccion que ts aplica. Si en toda la aplicacion usamos 'any' basicamente es lo mismo que trabajar en js. 
+    Los Genericos se indican <>. El inicial es <T>. Ahora va a inferir el tipo de dato en base al dato que le pasemos. Nuestro editor de texto nos va a ayudar con nuevas cosillas en base al tipo de dato que estamos trabajando.
+
+    export function whatsMyType<T>( argument: T): T {    
+        return argument;
+    }
+
+    const amIString = whatsMyType<string>('Hola gordo')
+    const amINumber = whatsMyType<number>(100)
+    const amIArray = whatsMyType<number[]>([1,2,3,4,5])
+
+27. Decoradores
+
+    archivo: topics/10-decorators
+    Los decoradores son algo medio complicado segun el profe, como para usar a su completa totalidad. Es raro que lleguemos a necesitarlos. A menos que creemos nuestro propio framework o bla bla bla. Nosotros vamos a usar los que ya estan creados.
+    Los decoradores no son mas que funciones especiales que se adjuntan a diferentes objetos. Muy parecido a los decorators en java @decorator.
+    En Angular todo van a ser clases, lo unico que cambia es el decorator que la decora para que se transforme en algo en particular, un componente, un modulo, un servicio etc.
+
+        @classDecorator
+        export class SuperClass{            
+            public myProperty: string = 'Abc1234'
+            print(){
+                console.log('Hola mundo')
+            }
+        }
+
+    https://www.typescriptlang.org/docs/handbook/decorators.html
+
+28. Encadenamiento opcional
+
+    El opcional chaining es cuando estamos referenciando a un valor que puede ser opcional.. 
+
+        const printChildren = ( passenger: Passenger) => {
+            const howManyChildren = passenger.children?.length || 0;
+            // con ! le digo que siempre confie en mi (not null assertion operator)
+            const howManyChildren = passenger.children!.length;
+            console.log(howManyChildren)
+        }
+
+29. Codigo fuente
+
+    https://github.com/Klerith/angular-introduccion-typescript
