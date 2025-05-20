@@ -65,21 +65,26 @@
 
 35. Explicacion del directorio src
 
-    app.component.ts
+    app.component.ts:
+
     Todo en angular es una clase. Los componentes para definir esa clase como componente tiene un decorador:
-        @Component({
-        selector: 'app-root',
-        imports: [RouterOutlet],
-        templateUrl: './app.component.html',
-        styleUrl: './app.component.css'
-        })
     
-    - el selector le da la el nombre de la etiqueta html para invocar al componente: <app-root></app-root>
+            @Component({
+            selector: 'app-root',
+            imports: [RouterOutlet],
+            templateUrl: './app.component.html',
+            styleUrl: './app.component.css'
+            })
+        
+    El selector le da la el nombre de la etiqueta html para invocar al componente:      
+        <app-root></app-root>
     
-    index.html
+    index.html:
+
     Es el que va a envolver toda la aplicacion.
 
-    main.ts
+    main.ts:
+
     Le decimos a angular como va a crear la aplicacion. /platfor-browser es porque va a correr web. En este archivo comienza la aplicacion, es el punto de entrada.
             
         bootstrapApplication(AppComponent, appConfig)
@@ -87,7 +92,8 @@
 
     bootrap levanta la aplicacion, le decimos que apartir de AppComponente, es el root, y con e importamos el appConfig que decide como corre la app. 
 
-    app.config.ts
+    app.config.ts:
+
     Se usa para modificar configuracion de typescript o javascript de forma global. ProvideRouter provee routes, que vienen de app.routes que es el que definimos las rutas de la aplicacion, donde dependiendo la ruta levanta ciertos component. Ademas esta provideZoneChangeDetection que nos va a permitir cambiar en como queremos que angular trabaje en cuanto al manejo de estado. 
 
     Apartir de angular 17 hay dos formas de trabajar. Una forma tradicional de declarar las properties y usarlas y a traves de signals que es a lo que esta queriendo llevar la tendencia angular.
@@ -114,6 +120,17 @@
         //Cuando tenemos una actualizacion del valor que depende del anterior usamos .update que nos va a dejar pasar por parametro un callback function que devuelve un valor
         this.counterSignal.update( (current) => current + 2)
 
+39. Zoneless Angular
+
+    En este momento estamos en una transicion de ZoneJS a Zoneless. ZoneJS es una libreria externa que se encarga del ciclo de deteccion de cambios de Angular. Si estamos trabajando con properties comun y corrtientes, con el Angular comun y corriente de toda la vida trabaja con ZoneJs al parecer no es del todo eficiente con el trabajo asincronico  (async / await) y es una libreria relativamente pesada. Decidieron pasar a Zoneless, aps que no dependan de zone.js ya que vieron que todo lo de los signals funciona bien, es veloz y mejora la performance en general.
+    Comentario: Si dentro de la definicion del decorator del @Component ponemos 'changeDetection: ChangeDetectionStrategy.OnPush' le estamos indicando directamente que no queremos usar ZoneJS en este componente.
+    Basicamente la gente de Angular esta pujando para que el framework sea mas rapida, para eso hay que deshacerse de ZoneJs y para eso hay que trabajar con signals.
+
+40. Tarea - Reforzar lo aprendido hasta el momento
+
+        https://gist.github.com/Klerith/b07bfb16b4d6aa27b8ccdbb991d316b2
+
+41. Solucion de la tarea
 
 
 
