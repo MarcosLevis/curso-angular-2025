@@ -68,15 +68,16 @@
     app.component.ts:
 
     Todo en angular es una clase. Los componentes para definir esa clase como componente tiene un decorador:
-    
-            @Component({
-            selector: 'app-root',
-            imports: [RouterOutlet],
-            templateUrl: './app.component.html',
-            styleUrl: './app.component.css'
-            })
+
+        @Component({
+        selector: 'app-root',
+        imports: [RouterOutlet],
+        templateUrl: './app.component.html',
+        styleUrl: './app.component.css'
+        })
         
     El selector le da la el nombre de la etiqueta html para invocar al componente:      
+        
         <app-root></app-root>
     
     index.html:
@@ -99,9 +100,11 @@
     Apartir de angular 17 hay dos formas de trabajar. Una forma tradicional de declarar las properties y usarlas y a traves de signals que es a lo que esta queriendo llevar la tendencia angular.
 
 36. Counter page - Componente
+
     app/pages
 
 37. Tarea - Separar template de la logica
+
     app/pages
 
 38. Señales - Signals
@@ -131,6 +134,8 @@
         https://gist.github.com/Klerith/b07bfb16b4d6aa27b8ccdbb991d316b2
 
 41. Solucion de la tarea
+
+42. Señales computadas - Readonly Signals
 
 
 
