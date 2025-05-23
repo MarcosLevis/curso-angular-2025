@@ -39,6 +39,7 @@ RouterLink es la primer Directiva que vamos a usar de angular.
 **49. RouterLink Active**
 
 RouterLink Active es una directiva para activar determinada cosa cuando lo "clickeamos", en este ejemplo al clickear un elemento html cuando lo clikeamos le agregamos dinamicamente una clase cuando estamos en el path que indica RouterLink.
+
     <nav>
         <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Contador</a>
         <a [routerLink]="['/hero']" [routerLinkActive]="'active'">Hero</a>
@@ -150,6 +151,55 @@ Entonces lo que vamos a hacer ahora es mover toda la data de la lista de la list
 **61. Efectos y LocalStorage**
 
 LocalStorage es un espacio en tu navegador web de forma local por cada sitio web.
+
+Session storage - Cada vez que cerramos todo el navegador web, todas las instancias nuestro browser el session storage se va a purgar y reiniciar. En cambio en LocalStorage por mas que cerremos todo va a seguir guardando la data. 
+
+Efectos: Los efectos sirven para lanzar acciones secundarias. No es mas que una funcion que recibe un callback (otra funcion) que se va a disparar cada vez que algo suceda. Es una especie de trigger. Por ejemplo puede tener un signal adentro y cada vez que el signal se actualice, esta funcion se ejecuta y hace algo, en este caso va a guardar algo en el local storage.
+
+Si yo pongo el siguiente efecto en el service. Cada vez que se modifique la signal characters que tiene un listado de personajes, el efecto se va a dispara e imprimir la cantidad de personajes que tiene la lista.
+
+    saveToLocalStorage = effect(() => {
+        console.log(`Caracter count ${this.characters().length}`)
+    })
+
+**62. LinkedSignal - Cargar del LocalStorage**
+
+Ahora vamos a ver como leer del localStorage
+
+    const loadFromLocalStorage = (): Character[] => {
+        const characters = localStorage.getItem('characters');
+        
+        //este json.parse estamos enganiando a typescript hay una forma mejor de hacerlo
+        //estamos asumiendo que lo que trae el local storage es el tipo de objeto que nosotros busacmos
+        return characters ? JSON.parse(characters): [];
+    }
+
+    characters = signal<Character[]>(loadFromLocalStorage());
+
+**63. Despliegues y HashRouter**
+
+En esta clase despliega esta pequenia app en 
+
+    https://www.netlify.com/
+
+Y explica como funciona un poco el manejo de rutas. Ya que el server no sabe que tiene que pasar por cada uno de los directorios intermedios para llegar a la ruta que queremos
+
+    www/.../.../.../dragonball-super
+
+Para esto podemos hacer una configuracion en nuestro app.config.ts de HashStrategy
+
+    //HashStrategy
+    {
+        provide: LocationStrategy,
+        useClass: HashLocationStrategy
+    }
+
+**64. Codigo Fuente**
+
+Aquí les dejo el repositorio del código tal cual lo dejamos al finalizar la última lección, úsenlo si lo necesitan para comparar contra el suyo.
+
+    https://github.com/DevTalles-corp/angular-bases/tree/fin-seccion-05
+
 
 
 
