@@ -4,7 +4,14 @@ Vamos a ver los conceptos basicos. Vamos a crear un proyectito pequeño. Lo mas 
     
 **31. Temas puntuales**
     
-Vamos a ver: signals, estados, propiedades, rutas, metodos, eventos, cambios en el DOM, cada archivo de un proyecto etc.
+    • Señales
+    • Estado
+    • Propiedades
+    • Rutas
+    • Métodos
+    • Eventos
+    • Cambios en el DOM
+    • Cada archivo y directorio de un proyecto
 
 **32. Intruccion a Angular**
 
