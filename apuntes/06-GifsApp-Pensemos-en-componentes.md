@@ -43,3 +43,6 @@ Hace una muestra de como va a ser la app que vamos a hacer en esta seccion. El f
 
 La voy a hacer en un repositorio distinto
 
+    https://tailwindcss.com/
+
+    https://www.creative-tim.com/twcomponents/component/dashboard-navigation
