@@ -46,3 +46,41 @@ La voy a hacer en un repositorio distinto
     https://tailwindcss.com/
 
     https://www.creative-tim.com/twcomponents/component/dashboard-navigation
+
+
+Instalamos tailwind como dice la pagina oficial y nos compiamos un template.
+
+**69. Pensemos en componentes**
+
+Creamos una carpeta para todo lo relacionado con los gifs. Como ya todos los componentes son por defecto standalone ya no se crean los modules. Creamos un nuevo componente usando Angular Schematics. 
+
+Luego crea una ruta, donde en vez de poner Component le pone una funcion. Dice que cuando pones "component:" hace que no haya carga perezosa, ninguna separacion de codigo y sera parte del bundle principal y esta bien porque esta ruta va a hacer visible, es el navbar. Ahora, si queremos que no se cargue bajo demanda hasta que alguien pueda entrar a la pagina se puede optimizar el bundle utilizadn loadComponent: () haciendo un lazy load. Es la importacion por defecto de la manera perezosa, bajo demanda carga el pedazo de script.
+
+
+    import { Routes } from '@angular/router';
+    export const routes: Routes = [
+        {
+            path:"dashboard",
+            loadComponent: () => import('./gifs/pages/dashboard-page/dashboard-page.component')
+        }
+    ];
+
+    //Para que la sintaxis funcione hay que agregarle el default a la class del componente
+    export default class DashboardPageComponent { }
+
+70. Rutas Hijas
+
+Vamos a trabajar con rutas hijas. Osea que las rutas queden dashboard/search o dashboard/trending. Basicamente a una ruta se le agrega un array de childen[]
+
+
+    {
+        path:"dashboard",
+        loadComponent: () => import('./gifs/pages/dashboard-page/dashboard-page.component'),
+        
+        children: [
+            {
+                path:"trending",
+                loadComponent: () => import('./gifs/pages/trending-page/trending-page.component')
+            }
+        ]
+    }
