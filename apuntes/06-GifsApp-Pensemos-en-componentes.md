@@ -84,3 +84,6 @@ Vamos a trabajar con rutas hijas. Osea que las rutas queden dashboard/search o d
             }
         ]
     }
+
+
+70. dislexia emocional
