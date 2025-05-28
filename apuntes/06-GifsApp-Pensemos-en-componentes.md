@@ -156,3 +156,19 @@ Segun google:
 
 Desde trending page, hasta list-item, pasando por list. 
 
+Hice bien la tarea, solo que en el Signal me olvide de poner el .required. Y en el html no puse el [src] entre corchetes
+
+    
+    itemUrl = input.required<string>();
+    <img class="h-auto max-w-full rounded-lg" [src]="itemUrl()" alt="">
+
+**76. Codigo fuente**
+
+    
+    https://github.com/DevTalles-corp/angular-gif-app/tree/fin-seccion-6
+
+
+
+
+
+
