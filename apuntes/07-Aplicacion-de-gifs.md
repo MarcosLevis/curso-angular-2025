@@ -78,5 +78,45 @@ Entonces nosotros proveemos el cliente, el cual luego es injectado en el service
 
 Hay que saber que en una peticion http nunca se va a realizar hasta nosotros no nos subscribamos. Con .subscribe() hacemos que se dispare. Lo que vamos a mandar dentro del parentesis es un callback donde le primer argumento es la data o la respuesta de la peticion del paso anterior.
 
-Si bien anteriormente creamos una serie de interfaces con toda la data que trae la api, es medio al pedo tener tanto dato si alfinal solo vamos a manejar 3. Aca el profe propone tener una interfaz con solo los datos que vamos a utilizar en la aplicacion, por eso creamos una interfaz mas pequenia con los unicos 3 datos de cada gif que vamos a utilizar. Ahora... la api nos responde un objeto enorme, por eso va a haber que mapear los datos de la respuesta http con nuestro pequenio objeto. Para esto creamos un mapper. El cual recibe el objeto grande entero de la api y tedevuelvo el pequenio gif con solo los datos que necesitamos. 
+Si bien anteriormente creamos una serie de interfaces con toda la data que trae la api, es medio al pedo tener tanto dato si alfinal solo vamos a manejar 3. Aca el profe propone tener una interfaz con solo los datos que vamos a utilizar en la aplicacion, por eso creamos una interfaz mas pequenia con los unicos 3 datos de cada gif que vamos a utilizar. Ahora... la api nos responde un objeto enorme, por eso va a haber que mapear los datos de la respuesta http con nuestro pequenio objeto. Para esto creamos un mapper. El cual recibe el objeto grande entero de la api y tedevuelvo el pequenio gif con solo los datos que necesitamos.
+
+**84. Mostrar Gifs en pantalla**
+
+Basicamente dejamos de usar el mock de los gifs y hacemos un "llamado" al service. Que en realidad es inyectar el service en el componente y despues acceder al signal de este.  
+
+**85. Diseño de pantalla - Buscador de Gifs**
+
+El buscador de gifs es casi la misma pagina que el Trending page, pero con un input de buscador con cosillas de tailwind. Para manejar el input, como todo, hay varias opciones. Una es (keyup)="$event" toma todo el evento que ha sucedido en una accion. Pero tambien existen modificadores de enveto. Uno de esos es enter.
+
+    //vamos a el evento una vez apretado la tecla 'enter'. Usando el input puramente de js.
+    (keyup.enter)="txtSearch.value"
+    #txtSearch
+
+
+**86. Mostrar resultados de busqueda**
+
+Esta clase esta BUENA. Me muestra que el service debe retornarme la data ya procesada. Entonces deberia subscribirme al http dentro del service, sin embargo, no puedo retornar la data de esta forma. Asi entran en juego los operadores de rxjs (pipe,foreach, map etc). Pipe nos permite encadenar funcionamientos especiales de los Observables. Tap es uno que sirve para lanzar efectos secundarios. Tambien es ta 'map' que es uno que me permite barrer elementos de mi respuesta y hace una transformacion sobre el objeto.
+La magia de los operadores de rxjs nos permiten transformar las emisiones de los observables y que toda la logica quede en el servicio y que los componentes reciban la data lo mas procesada posible. 
+
+    //GifService
+    getSearchGifs(query: string){
+        return this.http.get<GiphyResponse>(`${environment.giphyUrl}/gifs/search`,{
+            params: {
+                api_key: environment.apiKey,
+                q: query,
+                limit: 20
+            }
+        })
+        .pipe(
+            map(({ data })=> GifMapper.mapGiphyItemsToGifArray(items))
+        );     
+    }
+
+    //SearchPageComponent
+    onSearch(query:string){
+        this.gifService.getSearchGifs(query).subscribe( (resp) => 
+      this.gifList.set(resp) 
+    )}
+
+
 
