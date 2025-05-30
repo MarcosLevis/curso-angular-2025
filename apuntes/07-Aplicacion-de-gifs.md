@@ -118,5 +118,36 @@ La magia de los operadores de rxjs nos permiten transformar las emisiones de los
       this.gifList.set(resp) 
     )}
 
+**87. Historial y cache de busqueda**
+
+Vamos a hacer una memoria cache donde guarde las busquedas. Vamos a usar el tipo de dato Record que es un objeto clave-valor. Primero hacemos un signal que tenga las claves de las busquedas para que aparezca en el side-menu.
+
+**89. Argumentos dinamicos**
+
+Creamos un nuevo componente history-page que nos va a mostrar lo que ya hemos buscado. Le hacemos una path de ruta que va recibir un parametro /:query
+
+    {
+        path:'history/:query',
+        loadComponent: () => import('./gifs/pages/history-page/history-page.component')
+    },
 
 
+En este componente vamos a inyectar el ActivatedRoute que basicamente es la ruta actual y quedarnos con los parametros. Esto va a ser un observable por lo tanto va a emitir valores en tanto el url cambien
+
+
+    query = inject(ActivatedRoute).params.subscribe((params) => 
+    {
+        console.log(params)
+    })
+
+Tambien se puede hacer con snapshot, pero no seria dinamico. O una mejor forma seria en vez de subscribirme, transformar el observable en un signal:
+
+    query = toSignal(inject(ActivatedRoute).params)
+
+**90. Mostrar historial de busqueda**
+
+En la history-page tomamos el parametro del query, nos lo quedamos, llamamos a un metodo en el service que nos devuelve el array de gifs correspondiente a esa query y reutilizamos componente de list en la history-page para mostrar los gifs.
+
+**91. LocalStorage - Mantener el historial**
+
+Almacenar en el local storage lo buscado. 
