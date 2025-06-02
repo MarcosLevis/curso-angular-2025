@@ -122,7 +122,7 @@ La magia de los operadores de rxjs nos permiten transformar las emisiones de los
 
 Vamos a hacer una memoria cache donde guarde las busquedas. Vamos a usar el tipo de dato Record que es un objeto clave-valor. Primero hacemos un signal que tenga las claves de las busquedas para que aparezca en el side-menu.
 
-**89. Argumentos dinamicos**
+**88. Argumentos dinamicos**
 
 Creamos un nuevo componente history-page que nos va a mostrar lo que ya hemos buscado. Le hacemos una path de ruta que va recibir un parametro /:query
 
@@ -144,10 +144,15 @@ Tambien se puede hacer con snapshot, pero no seria dinamico. O una mejor forma s
 
     query = toSignal(inject(ActivatedRoute).params)
 
-**90. Mostrar historial de busqueda**
+**99. Mostrar historial de busqueda**
 
 En la history-page tomamos el parametro del query, nos lo quedamos, llamamos a un metodo en el service que nos devuelve el array de gifs correspondiente a esa query y reutilizamos componente de list en la history-page para mostrar los gifs.
 
-**91. LocalStorage - Mantener el historial**
+**90. LocalStorage - Mantener el historial**
 
 Almacenar en el local storage lo buscado. 
+
+**91. Codigo fuente**
+
+    
+    https://github.com/DevTalles-corp/angular-gif-app/tree/fin-seccion-07
