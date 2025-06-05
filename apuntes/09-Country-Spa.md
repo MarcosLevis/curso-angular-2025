@@ -73,4 +73,32 @@ El layout no es mas que un componente comun y corriente que usualmente usamos pa
 **109. DaisyUI - Componentes**
 
 
-Aplicamos el componente de footer a toda la aplicacion en app.component.html
+Aplicamos el componente de footer a toda la aplicacion en app.component.html. Armamos una estructura medio rara, pero por ahora es de lo mejorcito que se puede hacer, para que quede el footer una especie de <main> despues <router-outlet> y despues el <app-footer>
+
+**110. Menu superior e iconos**
+
+Hacemos el navbar y agregamos iconos de las siguientes webs.
+
+    https://iconify.design/
+    https://daisyui.com/components/menu/
+
+Volvemos a ustar RouterLink para los botones del navbar y tambien RouterLinkActive
+
+**111. Inputs y Tablas**
+
+Vamos a empezar a crear cada una de las paginas de los paises. Creamos un buscado con un input porque todavia no vimos forms. Y un boton para enviar lo que queramos buscar. Despues creamos una seccion con una tabla, full html para listar los paises. Luedo modularizamos y llevamos estas dos partes, tanto el buscador como la tabla de contenido a dos componentes distintos. Ahora, necesitamos que el componente buscador, le de como output el filtro buscado al componente padre que es la pagina, para que este busque y luego le envie a su hijo, el componente que lista el contenido. 
+
+**112. Solucion**
+
+Inputs, Outputs, Rutas dinamicas.
+
+
+**113. Guia de estilos - Resumen**
+
+Habla muy por arriba de las guias de estilos que propone angular para nombrar y ordenar las cosas.
+
+    https://angular.dev/style-guide
+
+Resumen del file system y como se organiza la app. 
+
+**114. Codigo fuente**
