@@ -92,10 +92,65 @@ Hacemos una classe CountryMapper que va a tener dos metodos staticos. Uno que re
         }
     }
 
-
-
-**121. Nombre del país en español**
+**122. Nombre del país en español**
 
 No me interesa. Simplemente es corregir el mapper para que mapee el nombre en de otro lado donde esta en espaniol.
 
 
+**123. Decimal pipe**
+
+Basicamente modificamos visualmente los numeros para que se lean mejor. Angular utiliza Pipes que son una especie de objeto que modifican visualmente algo, depende del pipe. DecimalPipe, JsonPipe, TitleCasePipe, etc. Al pasar algo por esta funcion se ve modificado visualmente. Mas adelante en el curso tenemos una seccion especifica de esto. 
+
+**124. Manejo de excepciones**
+
+(Esto a partir de la 19 cambia a menos lineas de codigo con Resources todavia experimental)
+
+Vemos el manejo de excepciones en Angular. Hay varias formas de hacerlo. En nuestro componente podemos manejarlo usando next y error, pero creo que esto despues se va a refactorizar.
+
+    this.countryService.searchByCapital(query)
+        .subscribe({
+            next: (countries) => {
+                this.isLoading.set(false)
+                this.countries.set(countries)
+                console.log(countries)
+            },
+            error: (err) => {
+                console.log(err) //este err es el que enviamos desde el service
+                this.isLoading.set(false)
+                this.countries.set([])
+                this.isError.set(`No se encontró un país con esa capital: ${query}`)
+            }
+        })
+
+Tambien puede ser que si algo da error querramos regresaar algo con exito desde el service, entonces lo manejemos desde el service. Y aca tambien hay varias formas, pero vamos a usar los operadores de rxjs osea catchError, que va a retornar una funcion throwErro() que lo que haces es retornar Observable para que luego tambien pueda ser manejada desde el componente.
+
+    searchByCapital(query:string): Observable<Country[]>{
+        query = query.toLowerCase()
+        return this.http.get<RESTCountry[]>(`${API_URL}/capital/${query}`)
+        .pipe(
+            map( resp => CountryMapper.mapRestCountryArrayToCountryArray(resp)),
+            catchError(error => {
+                console.log('Error fetching', error)
+                return throwError(() => new Error('No se pudo obtener paises con ese query'))
+            })
+        )
+    }
+
+**125. Reactividad con Resources**
+
+Reducimos la logica del componente utilizando Resources. 
+
+    https://angular.dev/guide/signals/resource
+
+Todavia es experimental, puede cambiar. El Resource es una funcion que se define mandandole un objeto de configuracion. El objeto de configuracion tiene una request. Esta request es una funcion basicamente que nos va a permitir mandar la serie de argumentos que nosotros queremos en la otra funcion, la funcion loader. La funcion loader es la realiza el trabajo asincrono, cada vez que cambiemos el valor de la signal que vaya como argumento en el request, va a volver a disparar el 'loader' con los valores que cambiaron. Esto es muy poderoso. !importante
+
+    countryResource = resource({
+        request: () => ({ query: this.query() }),
+        loader: async({ request}) => {
+            if ( !request.query ) return []
+
+            return await firstValueFrom(
+            this.countryService.searchByCapital(request.query)
+            )
+        }
+    })
