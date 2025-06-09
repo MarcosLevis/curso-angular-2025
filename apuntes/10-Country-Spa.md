@@ -154,3 +154,102 @@ Todavia es experimental, puede cambiar. El Resource es una funcion que se define
             )
         }
     })
+
+**126. Tarea - buscar paises**
+
+Basicamente hacemos lo mismo pero en la otra page.
+
+**127. RxResource**
+
+(Segun zeke esto no se usa y se usa httpResource)
+Ya aprendimos a trabajar con el resource. El unico inconveniente que tenemos es que tenemos que llamar a una funcion de rxjs para transformar el valor del Observable en una promesa porque resource trabaja con promesas. Seria genial que trabaje con observables, pero trabaja con promesas. De todas formas hay otro objeto que se llama rxResource que hace lo mismo pero trabaja con observable. Entonces vamos a refactorizar lo anterior usando rxResource.
+
+    countryResource = rxResource({
+        request: () => ({ query: this.query() }),
+        loader: ({ request}) => {
+            if ( !request.query ) return of([])
+            return this.countryService.searchByCapital(request.query)
+        }
+    })
+
+**128. Mostrar diferentes estados al usuario**
+
+Basicamente modificamos la forma en la que estabamos controlado el estado de la peticion, ahora lo hacemos con signals pasados como inputs y que el country-list lo maneje en su template.
+
+    <country-list 
+        [countries]="countryResource.value() ?? []"
+        [errorMessage]="countryResource.error()"    
+        [isEmpty]="countryResource.value()?.length === 0"
+        [isLoading]="countryResource.isLoading()"
+    />
+
+        @if (errorMessage()) {
+            <tr>
+                <td colspan="8" class="text-center">
+                    {{ errorMessage() }}
+                </td>
+            </tr>
+        }
+        
+        <!--  -->
+        @if (countries().length === 0 && !isLoading()) {
+            <tr>
+                <td colspan="8" class="text-center">
+                    No se encontraron resultados
+                </td>
+            </tr>
+        }
+        
+        <!--  -->
+        @if (isLoading()) {
+            <tr>
+                <td colspan="8" class="text-center">
+                    Buscando paises
+                </td>
+            </tr>
+        }
+
+    
+**129. Informacion de un pais**
+
+Ahora vamos a manejar el boton de 'mas informacion' para mostrar un compnente del pais que muestre todos sus datos. Podemos hacerlo de dos maneras, con un observable que este pendiente de los cambios en la url para obtener el codigo del pais, o podemos utilizar un snapshot. Como previamente ya usamos observable ahora, para tener mas formas de hacer las cosas, vamos a usar el snapshot.
+
+    countryCode = inject(ActivatedRoute).snapshot.params['code'] //esto no es dinamico ni reactivo
+
+Luego vamos a hacer uso de Resource para traerse todo. 
+
+
+  countryCode = inject(ActivatedRoute).snapshot.params['code'] //esto no es dinamico ni reactivo
+  countryService = inject(CountryService)
+
+  countryResource = rxResource({
+    request: () => ({ code: this.countryCode}),
+    loader: ({ request }) => {
+      return this.countryService.searchByAlphaCode(request.code)
+    }
+  })
+
+
+**130. Detalles del pais**
+
+Primero creamos un componente que maneje la pantalla de NotFound, con un boton que nos redirija a la pagina anterior. Para esto usanmos Location
+
+    export class NotFoundComponent {
+
+        location = inject(Location)
+
+        goBack(){
+            this.location.back()
+        }
+    }
+
+Ademas creamos un nuevo componente que muestra los datos del pais propio.
+
+**131. Resolucion tarea**
+
+Ponemos las linda la vista. Cosas de Tailwind y DaisyUI
+
+**132. Codigo fuente**
+
+    https://github.com/DevTalles-corp/angular-country-app/tree/fin-seccion-10
+
