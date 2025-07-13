@@ -43,4 +43,7 @@ Guardamos en un Set una clave con query y el valor con el array de paises que re
 
 **139. Tarea - Cache de paises**
 
-Hacer lo hecho anteriorimente pero para buscar paises por su nombre. 
+Hacer lo hecho anteriorimente pero para buscar paises por su nombre.
+
+**140. Tarea - Pises por region**
+
